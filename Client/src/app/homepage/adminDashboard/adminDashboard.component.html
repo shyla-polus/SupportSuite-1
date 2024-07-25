@@ -1,0 +1,54 @@
+<div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+        <h5 tabindex="1">Admin Inbox</h5>
+        <a class="btn btn-success"  tabindex="1" routerLinkActive="active" data-bs-toggle="collapse" 
+            data-bs-target="#collapseDashboard" aria-expanded="false" aria-controls="collapseDashboard" title="show dashboard">
+            Dashboard
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                10
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </a>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+        <h5 tabindex="1">Assign new Administrator</h5>
+        <a class="btn btn-success"  tabindex="1" routerLinkActive="active" data-bs-toggle="collapse" 
+            data-bs-target="#collapseNewAdmin" aria-expanded="false" aria-controls="collapseNewAdmin" title="show create admin field">
+            New Admin</a>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+        <h5 tabindex="1">Create new service type</h5>
+        <a class="btn btn-success"  tabindex="1" routerLinkActive="active" data-bs-toggle="collapse" 
+            data-bs-target="#collapseNewService" aria-expanded="true" aria-controls="collapseNewService" title="show add new service type">
+            New service type</a>
+    </div>
+</div>
+
+<div class="accordion" id="accordionExampleOne">
+    <div class="accordion-item">
+        <div id="collapseNewAdmin" class="accordion-collapse collapse" aria-labelledby="headingNewAdmin" data-bs-parent="#accordionExampleOne">
+            <div class="accordion-body">
+                <app-newAdmin></app-newAdmin>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <div id="collapseNewService" class="accordion-collapse collapse" aria-labelledby="headingNewService" data-bs-parent="#accordionExampleOne">
+            <div class="accordion-body">
+                <app-addService></app-addService>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <div id="collapseDashboard" class="accordion-collapse collapse show" aria-labelledby="headingDashboard" data-bs-parent="#accordionExampleOne">
+            <div class="accordion-body">
+                <app-dashBoard></app-dashBoard>
+            </div>
+        </div>
+    </div>
+</div>
+

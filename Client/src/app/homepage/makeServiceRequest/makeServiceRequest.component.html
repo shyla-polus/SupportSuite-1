@@ -1,0 +1,40 @@
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h4 tabindex="1">Make a Service Request</h4>
+                </div>
+                <div class="card-body">
+                    <form class="row g-3" aria-label="Service Request Form">
+                        <div class="col-12">
+                            <label for="selectService" class="form-label mb-0" aria-label="select service label" tabindex="1">Select Service</label>
+                        </div>
+                        <div class="col-12">
+                            <select class="form-control" id="selectService" name="selectService" [(ngModel)]="selectService" required aria-label="select service " tabindex="1" aria-required="true">
+                                <option value="" disabled>Select a service</option>
+                                <option *ngFor="let category of categories" [ngValue]="category">{{ category.categoryName }}</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="serviceDescription" class="form-label">Service Description</label>
+                            <textarea class="form-control" name="serviceDescription" [(ngModel)]="makeReqObj.requestDescription"
+                                      id="serviceDescription" required aria-required="true" aria-label="Service Description"></textarea>
+                        </div>
+                        <div class="col-md-12 text-end">
+                            <button class="btn btn-danger me-2" type="button" (click)="clearForm()" aria-label="Clear Form" title="Clear the form">
+                                <i class="bi bi-trash"></i> Clear
+                            </button>
+                            <button class="btn btn-success" name="button" (click)="addInProgress();scrollToElement('inProgressComponent')" type="create button" aria-label="Add Service Request" title="Create a new service request">
+                                <i class="bi bi-check2"></i> Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showInProgressComponent">
+    <app-inProgress id="inProgressComponent"></app-inProgress>
+</div>

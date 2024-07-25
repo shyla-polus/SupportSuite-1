@@ -1,0 +1,45 @@
+.sidebar {
+  display: none;
+  position: fixed;
+  top: 56px; 
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 48px 0 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.title:hover, 
+.sidebar .nav-link:hover {
+  color: #f7d308;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #fff;
+}
+
+.sidebar.show {
+  display: block;
+}
+
+.navbar {
+  z-index: 1050; 
+}
+
+.nav-link.active {
+  font-weight: bold; 
+  color: #007bff; 
+
+}
+
+@media (max-width: 768px) {
+
+  .sidebar {
+    display: none;
+  }
+
+  .navbar + .navbar {
+    margin-top: 0;
+  }
+}

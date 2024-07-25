@@ -1,0 +1,15 @@
+
+.border-light-subtle {
+    border: 3px solid rgba(5, 1, 1, 0.1);
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+  
+.vh-100 {
+    height: 100vh;
+}
+
+
+

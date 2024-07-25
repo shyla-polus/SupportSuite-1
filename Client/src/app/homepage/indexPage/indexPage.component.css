@@ -1,0 +1,11 @@
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.accordion-header {
+    flex-basis: 100%;
+}
+
+.accordion-button {
+    width: 100%;
+}

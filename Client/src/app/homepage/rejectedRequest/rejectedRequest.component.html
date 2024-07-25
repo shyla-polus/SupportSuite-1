@@ -1,0 +1,50 @@
+<div class="container-fluid d-flex flex-column vh-100">
+    <div class="flex-grow-1">
+        <h3 class="d-flex justify-content-start">Rejected Requests</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle mb-0 bg-white">
+            <thead class="bg-light">
+              <tr tabIndex="1">
+                <th>Profile</th>
+                <th>Request</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created Time</th>
+                <th>comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of allRejectedTickets" tabindex="1" class="ticket-card">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img
+                      src="https://th.bing.com/th?id=OIP.f3DM2upCo-p_NPRwBAwbKQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+                      alt=""
+                      style="width: 45px; height: 45px"
+                      class="rounded-circle img-fluid"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <p class="fw-bold mb-1">{{ ticket?.category.categoryName }}</p>
+                </td>
+                <td class="description">{{ ticket?.requestDescription }}</td>
+                <td>
+                  <span class="badge bg-danger">{{ ticket?.statusDescription.status }}</span>
+                </td>
+                <td>{{ getTime(ticket.updateTimestamp) }}</td>
+                <td>
+                    {{ ticket?.comment?.comment}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="btn-group me-2 d-flex align-items-center btn-group btn" role="group" aria-label="Pagination" tabIndex="1">
+        <button *ngFor="let page of getPagesArray()" type="button" title="Pagination"
+                (click)="pageNumberFun(page)" class="btn btn-secondary">
+            {{ page + 1 }}
+        </button>
+    </div>
+</div>
