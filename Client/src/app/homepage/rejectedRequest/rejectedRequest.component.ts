@@ -43,7 +43,7 @@ export class RejectedRequestComponent implements OnInit {
         this._sharedService.getAllRequestCount().subscribe({
          next: (response: any) => {
              this.allRequestCount=response;
-             const totalRequestCount = response.assignedRequests; 
+             const totalRequestCount = response.approvedRequests; 
              this.totalPages = Math.ceil(totalRequestCount / 10);
              this.loadALLApprovedTickets();
          },

@@ -41,10 +41,22 @@
           </table>
         </div>
     </div>
-    <div class="btn-group me-2 d-flex align-items-center btn-group btn" role="group" aria-label="Pagination" tabIndex="1">
-        <button *ngFor="let page of getPagesArray()" type="button" title="Pagination"
-                (click)="pageNumberFun(page)" class="btn btn-secondary">
-            {{ page + 1 }}
-        </button>
-    </div>
+</div>
+<div class="btn-group me-2 d-flex align-items-center btn-group btn" role="group" aria-label="Pagination" tabIndex="1">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link"  aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of getPagesArray()"  title="Pagination">
+            <a class="page-link" (click)="pageNumberFun(page)"> {{ page + 1 }}</a></li>
+          <li class="page-item">
+            <a class="page-link"  aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 </div>

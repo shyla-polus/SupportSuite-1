@@ -113,7 +113,7 @@ export class InProgressComponent implements OnInit {
     this._sharedService.getAllRequestCount().subscribe({
         next: (response: any) => {
             this.allRequestCount=response;
-            const totalRequestCount = response.assignedRequests; 
+            const totalRequestCount = response.inProgressRequests; 
             this.totalPages = Math.ceil(totalRequestCount / 10);
             this.loadInProgressTickets();
         },
