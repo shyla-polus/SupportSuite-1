@@ -66,7 +66,8 @@ public class TicketController {
 	}
 
 	@PostMapping("getServiceTickets")
-	public ResponseEntity<Object> getServiceTickets(@RequestBody ServiceTicketsDetailsDTO serviceTicketsDetailsDTO) {
+	public ResponseEntity<Object> getServiceTickets(
+			@RequestBody ServiceTicketsDetailsDTO serviceTicketsDetailsDTO) {
 		Map<String, String> response = new HashMap<>();
 		try {
 			List<TicketResponseDTO> tickets = ticketService.getServiceTickets(serviceTicketsDetailsDTO);
@@ -162,7 +163,7 @@ public class TicketController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
-
+	
 	@PostMapping("/editRejectedTickets")
 	public ResponseEntity<Object> editRejectedTickets(@RequestBody ServiceTicketDTO ticketDTO) {
 		Map<String, String> response = new HashMap<>();

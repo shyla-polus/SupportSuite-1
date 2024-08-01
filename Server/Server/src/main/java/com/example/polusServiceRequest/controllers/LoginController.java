@@ -23,53 +23,53 @@ import com.example.polusServiceRequest.services.LoginService;
 @RequestMapping("/api")
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
+	@Autowired
+	private LoginService loginService;
 
-    @PostMapping("/login")
-    public ResponseEntity<Object> signIn(@RequestBody SignInDTO signInDTO) {
-        try {
-            SignInResponseDTO responseDTO = loginService.signIn(signInDTO.getUserName(), signInDTO.getPassword());
-            return ResponseEntity.ok().body(responseDTO);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during sign-in.");
-        }
-    }
+	@PostMapping("/login")
+	public ResponseEntity<Object> signIn(@RequestBody SignInDTO signInDTO) {
+		try {
+			SignInResponseDTO responseDTO = loginService.signIn(signInDTO.getUserName(), signInDTO.getPassword());
+			return ResponseEntity.ok().body(responseDTO);
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during sign-in.");
+		}
+	}
 
-    @PostMapping("/signup")
-    public ResponseEntity<Object> signUp(@RequestBody SignUpDTO signUpDTO) {
-        Map<String, String> response = new HashMap<>();
-        try {
-            boolean actionCompleted = loginService.signUp(signUpDTO);
-            if (actionCompleted) {
-                response.put("message", "User registration successful");
-                return ResponseEntity.status(HttpStatus.CREATED).body(response);
-            } else {
-                response.put("message", "User registration failed");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during sign-up.");
-        }
-    }
+	@PostMapping("/signup")
+	public ResponseEntity<Object> signUp(@RequestBody SignUpDTO signUpDTO) {
+		Map<String, String> response = new HashMap<>();
+		try {
+			boolean actionCompleted = loginService.signUp(signUpDTO);
+			if (actionCompleted) {
+				response.put("message", "User registration successful");
+				return ResponseEntity.status(HttpStatus.CREATED).body(response);
+			} else {
+				response.put("message", "User registration failed");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			}
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during sign-up.");
+		}
+	}
 
-    @GetMapping("/countries")
-    public ResponseEntity<List<CountryEntity>> getCountries() {
-        try {
-            List<CountryEntity> countries = loginService.getAllCountries();
-            return ResponseEntity.ok().body(countries);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-    
-    @PostMapping("/editUserDetails")
+	@GetMapping("/countries")
+	public ResponseEntity<List<CountryEntity>> getCountries() {
+		try {
+			List<CountryEntity> countries = loginService.getAllCountries();
+			return ResponseEntity.ok().body(countries);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@PostMapping("/editUserDetails")
 	public ResponseEntity<Object> editUserDetails(@RequestBody SignUpDTO signUpDTO) {
-    	Map<String, String> response = new HashMap<>();
+		Map<String, String> response = new HashMap<>();
 		try {
 
 			SignInResponseDTO responseDTO = loginService.editUserDetails(signUpDTO);
