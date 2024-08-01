@@ -1,3 +1,63 @@
-<p>
-  newAdmin works!
-</p>
+<h3 class="d-flex justify-content-start mb-5">Assign Admin privileges to User</h3>
+
+<label for="MakeAdminID" class="form-label">Make Admin<span class="text-danger">*</span></label>
+<select class="form-control border-2" id="MakeAdminID" [(ngModel)]="makeAdminPayload.personId" name="users" required tabindex="0">
+    <option value="" disabled selected>Select user</option>
+    <option *ngFor="let user of allUsers" [ngValue]="user.personId">{{ user.name }}</option>
+</select>
+<div class="d-flex justify-content-end">
+    <button class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#newAdminPopUp">Make Admin</button>
+</div>
+
+<div class="modal fade" id="newAdminPopUp" aria-labelledby="newAdminPopUpLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div *ngIf="makeAdminPayload.personId; else elseBlock" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    Do you want to assign user as administrator?
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary me-1" title="Close" data-bs-dismiss="modal" tabindex="0" aria-label="Close New admin">Close</button>
+                    <button type="button" class="btn btn-outline-primary" title="Approve Ticket" (click)="makeAdmin()" data-bs-dismiss="modal" tabindex="0" aria-label="Approve button">Submit</button>
+                </div>
+            </div>
+           <ng-template #elseBlock>
+            <div class="alert alert-danger m-2 modal-body" role="alert">
+                please fill all fields
+            </div>
+           </ng-template>
+        </div>
+    </div>
+</div>
+
+
+<h3 class="d-flex justify-content-start mb-5">Revoke Admin privilege</h3>
+<label for="RevokeAdminID" class="form-label">Revoke Admin<span class="text-danger">*</span></label>
+<select class="form-control border-2" id="RevokeAdminID" [(ngModel)]="revokeAdminPayload.personId" name="users" required tabindex="0">
+    <option value="" disabled selected>Select admin</option>
+    <option *ngFor="let admin of allAdministrator" [ngValue]="admin.personId">{{ admin.name }}</option>
+</select>
+<div class="d-flex justify-content-end">
+    <button class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#revokeAdminPopUp">Revoke Admin</button>
+</div>
+
+<div class="modal fade" id="revokeAdminPopUp" aria-labelledby="revokeAdminPopUpLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div *ngIf="revokeAdminPayload.personId; else elseBlock" class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    Do you want to revoke administrator?
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary me-1" title="Close" data-bs-dismiss="modal" tabindex="0" aria-label="Close revoke admin">Close</button>
+                    <button type="button" class="btn btn-outline-primary" title="Approve Ticket" (click)="revokeAdmin()" data-bs-dismiss="modal" tabindex="0" aria-label="Approve button">Submit</button>
+                </div>
+            </div>
+           <ng-template #elseBlock>
+            <div class="alert alert-danger m-2 modal-body" role="alert">
+                please fill all fields
+            </div>
+           </ng-template>
+        </div>
+    </div>
+</div>

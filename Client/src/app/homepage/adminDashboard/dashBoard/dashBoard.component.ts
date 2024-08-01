@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SharedService } from '../../../shared.service';
 import { TicketFetchPayLoad } from '../../../interface';
 import { Router } from '@angular/router';
@@ -9,11 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashBoard.component.css']
 })
 export class DashBoardComponent implements OnInit {
+
+   @Output() countEvent: EventEmitter<any> = new EventEmitter();
+
+
+  showRejectMessage: boolean = false;
+  showApproveMessage: boolean = false;
   loggedInUser: any;
   pageNumber:number=0;
   totalPages: number = 0;
   allRequestCount: any ={}
   allAssignedTickets: any = [];
+  TicketApproveOrRejectDTO: any={
+    statusCode:null,
+    comment:'',
+    ticketId:null
+  }
 
   constructor(private _sharedService:SharedService , private _router: Router) { }
 
@@ -21,14 +32,15 @@ export class DashBoardComponent implements OnInit {
     this.checkUserAuthentication()
     this.loggedInUser = this._sharedService.getLoggedInUser();
     this.getAllRequestCount()
+    this.getAllAssignedToMe()
   }
 
   private checkUserAuthentication(): void {
-    const isLoggedIn = !!this._sharedService.getLoggedInUser();
-    if (!isLoggedIn) {
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
       this._router.navigate(['/login']);
-      }
     }
+  }
 
     public pageNumberFun(page:number) {
         this.pageNumber=page;
@@ -39,7 +51,7 @@ export class DashBoardComponent implements OnInit {
         this._sharedService.getAllRequestCount().subscribe({
          next: (response: any) => {
              this.allRequestCount=response;
-             const totalRequestCount = response.assignedRequests; 
+             const totalRequestCount = response.assignedToMeRequests; 
              this.totalPages = Math.ceil(totalRequestCount / 10);
              this.getAllAssignedToMe();
          },
@@ -68,6 +80,43 @@ export class DashBoardComponent implements OnInit {
       });
     }
 
+    public currentTicket(ticket: any): void {
+        this.TicketApproveOrRejectDTO.ticketId = ticket;
+        this.showRejectMessage=false;
+        this.showApproveMessage=false;
+    }
+
+
+    public isApproveReject(status:number): void{
+        this.TicketApproveOrRejectDTO.statusCode=status;
+        this._sharedService.statusChangeToApprovedOrRejected(this.TicketApproveOrRejectDTO).subscribe({
+            next: (response: any) => {
+                this.getAllAssignedToMe();
+                this.setComment();
+                this.countEvent.emit('check count');
+                this.showRejectMessage=false;
+                this.showApproveMessage=false;
+            },
+            error: (err) => {
+              console.error('Failed to fetch tickets', err);
+            }
+          });
+
+        
+    }
+
+
+    public toggleApproveMessage() {
+        this.showApproveMessage = !this.showApproveMessage;
+        this.showRejectMessage = false;
+      }
+
+
+    public toggleRejectMessage() {
+    this.showRejectMessage = !this.showRejectMessage;
+    this.showApproveMessage=false;
+    }
+
       
     public getTime(timestamp: string): string {
         const NOW = new Date();
@@ -94,6 +143,10 @@ export class DashBoardComponent implements OnInit {
         } else {
             return SECONDSAGO === 1 ? '1 second ago' : `${SECONDSAGO} seconds ago`;
         }
+      }
+
+      public setComment(){
+        this.TicketApproveOrRejectDTO.comment='';
       }
   
       public getPagesArray(): number[] {

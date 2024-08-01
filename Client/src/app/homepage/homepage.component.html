@@ -3,14 +3,14 @@
         <!-- Main Navbar -->
         <nav class="navbar navbar-dark bg-dark fixed-top px-3" aria-label="Main navigation bar">
             <div>
-                <img class="me-2" width="40" height="40" src="polus-logo-mono.png" tabindex="1" alt="website logo">
-                <a class="navbar-brand title" aria-label="website name" tabindex="1">SupportSuite</a>
+                <img class="me-2" width="40" height="40" src="polus-logo-mono.png" tabindex="0" alt="website logo">
+                <a class="navbar-brand title" aria-label="website name" tabindex="0">SupportSuite</a>
             </div>
             <div class="d-flex justify-content-end align-items-center ms-auto">
-                <button class="navbar-toggler me-2" title="User Profile" id="userProfileButton" type="button" aria-label="user profile button" tabindex="1" (click)="userProfile($event)" aria-label="User Profile">
+                <button class="navbar-toggler me-2" title="{{LoggedInUser.userName}}" id="userProfileButton" type="button" aria-label="user profile button" tabindex="0" (click)="userProfile($event)" aria-label="User Profile">
                     <span class="bi bi-person-fill"></span>
                 </button>
-                <button class="navbar-toggler" title="logout Button" id="logoutButton" type="button" (click)="logout($event)" tabindex="1" aria-label="Logout button">
+                <button class="navbar-toggler" title="logout Button" id="logoutButton" type="button" (click)="logout($event)" aria-label="Click here to logout">
                     <span class="bi bi-box-arrow-right"></span>
                 </button>
             </div>
@@ -21,24 +21,19 @@
             <div class="position-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" routerLink="indexPage" routerLinkActive="active" aria-label="button to access homepage" tabindex="1" aria-current="page">Home</a>
+                        <a class="nav-link active" routerLink="indexPage" routerLinkActive="active" aria-label="button to access homepage" tabindex="0" aria-current="page">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="makeReq" routerLinkActive="active" aria-label="button to access make request page" tabindex="1">Create Service Request</a>
+                        <a class="nav-link" routerLink="makeReq" routerLinkActive="active" aria-label="button to access make request page" tabindex="0">Create Service Request</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="inPro" routerLinkActive="active" aria-label="button to access inprogress requests" tabindex="1">Request In Progress</a>
+                        <a class="nav-link" routerLink="inPro" routerLinkActive="active" aria-label="button to access inprogress requests" tabindex="0">Request In Progress</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="assignedReq" routerLinkActive="active" aria-label="button to access assigned request" tabindex="1">Request Assigned</a>
+                        <a class="nav-link" routerLink="assignedReq" routerLinkActive="active" aria-label="button to access assigned request" tabindex="0">Request Assigned</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="dropdown01" (click)="toggleDropdown($event)" aria-expanded="false" aria-haspopup="true" aria-label="button to access admin dashboard" tabindex="1">Admin Dashboard</a>
-                        <ul class="dropdown-menu" [class.show]="isDropdownVisible" aria-labelledby="dropdown01">
-                            <li><a class="dropdown-item" routerLink="AdminDashboard">Dashboard</a></li>
-                            <li><a class="dropdown-item" routerLink="AdminDashboard/addService">Create new Service</a></li>
-                            <li><a class="dropdown-item" routerLink="AdminDashboard/newAdmin">Assign Admin</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a  *ngIf="isAdmin()" routerLink="AdminDashboard" class="nav-link" id="AdminDashboardLink"  aria-label="button to access admin dashboard" tabindex="0">Admin Dashboard</a>
                     </li>
                 </ul>
             </div>
@@ -64,13 +59,8 @@
                         <li class="nav-item">
                             <a class="nav-link" routerLink="assignedReq" routerLinkActive="active">Request Assigned</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="dropdown02" (click)="toggleDropdown($event)" aria-expanded="false" aria-haspopup="true">Admin Dashboard</a>
-                            <ul class="dropdown-menu" [class.show]="isDropdownVisible" aria-labelledby="dropdown02">
-                                <li><a class="dropdown-item" routerLink="AdminDashboard">Dashboard</a></li>
-                                <li><a class="dropdown-item" routerLink="AdminDashboard/addService">Create new Service</a></li>
-                                <li><a class="dropdown-item" routerLink="AdminDashboard/newAdmin">Assign Admin</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a  *ngIf="isAdmin()" routerLink="AdminDashboard" class="nav-link" id="AdminDashboardLink"  aria-label="button to access admin dashboard" tabindex="0">Admin Dashboard</a>
                         </li>
                     </ul>
                 </div>

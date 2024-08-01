@@ -3,30 +3,28 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    <h4 tabindex="1">Make a Service Request</h4>
+                    <h4>Make a Service Request</h4>
                 </div>
                 <div class="card-body">
                     <form class="row g-3" aria-label="Service Request Form">
                         <div class="col-12">
-                            <label for="selectService" class="form-label mb-0" aria-label="select service label" tabindex="1">Select Service</label>
-                        </div>
-                        <div class="col-12">
-                            <select class="form-control" id="selectService" name="selectService" [(ngModel)]="selectService" required aria-label="select service " tabindex="1" aria-required="true">
+                            <label for="selectService" class="form-label" aria-label="Select Service">Select Service</label>
+                            <select class="form-control border-2" id="selectService" name="selectService" [(ngModel)]="selectService" required aria-label="Select a service" aria-required="true">
                                 <option value="" disabled>Select a service</option>
                                 <option *ngFor="let category of categories" [ngValue]="category">{{ category.categoryName }}</option>
                             </select>
                         </div>
                         <div class="col-12">
-                            <label for="serviceDescription" class="form-label">Service Description</label>
+                            <label for="serviceDescription" class="form-label border-2" aria-label="Service Description">Service Description</label>
                             <textarea class="form-control" name="serviceDescription" [(ngModel)]="makeReqObj.requestDescription"
-                                      id="serviceDescription" required aria-required="true" aria-label="Service Description"></textarea>
+                                      id="serviceDescription" required aria-required="true" aria-label="Describe your service request"></textarea>
                         </div>
                         <div class="col-md-12 text-end">
-                            <button class="btn btn-danger me-2" type="button" (click)="clearForm()" aria-label="Clear Form" title="Clear the form">
-                                <i class="bi bi-trash"></i> Clear
+                            <button class="btn btn-danger me-2 col-2" type="button" (click)="clearForm()" aria-label="Clear Form" title="Clear the form">
+                                <i class="bi bi-trash"></i> 
                             </button>
-                            <button class="btn btn-success" name="button" (click)="addInProgress();scrollToElement('inProgressComponent')" type="create button" aria-label="Add Service Request" title="Create a new service request">
-                                <i class="bi bi-check2"></i> Create
+                            <button class="btn btn-success col-2" type="submit" (click)="addInProgress();scrollToElement('inProgressComponent')" aria-label="Add Service Request" title="Create a new service request">
+                                <i class="bi bi-check2"></i> 
                             </button>
                         </div>
                     </form>

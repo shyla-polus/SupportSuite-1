@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
 
         this.sharedService.login(this.loginObj).subscribe({
             next: (response: any) => {
+                sessionStorage.setItem('loggedInUser', JSON.stringify(response));
                 this.sharedService.setLoggedInUser(response);
                 Swal.fire({
                     position: "center",

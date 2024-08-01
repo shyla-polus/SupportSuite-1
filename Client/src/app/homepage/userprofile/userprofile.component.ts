@@ -21,8 +21,8 @@ export class UserprofileComponent implements OnInit {
     }
 
     private checkUserAuthentication(): void {
-        const isLoggedIn = !!this._sharedService.getLoggedInUser();
-        if (!isLoggedIn) {
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (!loggedInUser) {
           this._router.navigate(['/login']);
         }
       }

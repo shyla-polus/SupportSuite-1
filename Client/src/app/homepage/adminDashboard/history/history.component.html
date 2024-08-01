@@ -1,0 +1,81 @@
+<h3 class="d-flex justify-content-start" id="in-progress-title">Previous Records</h3>
+<div class="table-responsive" id="in-progress-table">
+    <table class="table table-striped table-hover align-middle mb-0 bg-white" aria-describedby="in-progress-title">
+        <thead class="bg-light">
+            <tr>
+                <th>Profile</th>
+                <th>Request</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Time</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ticket of allApprovedTickets" class="ticket-card" id="ticket-{{ ticket.id }}">
+                <td>
+                    <div class="d-flex align-items-center" id="profile-pic-container-{{ ticket.id }}">
+                        <img src="https://th.bing.com/th?id=OIP.f3DM2upCo-p_NPRwBAwbKQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+                             alt="Profile picture of {{ ticket.assignedTo?.name || 'user' }}"
+                             style="width: 45px; height: 45px"
+                             class="rounded-circle img-fluid"
+                             loading="lazy"
+                             id="profile-pic-{{ ticket.id }}"
+                        />
+                    </div>
+                </td>
+                <td id="request-category-{{ ticket.id }}">
+                    <p class="fw-bold mb-1">{{ ticket?.category?.categoryName }}</p>
+                </td>
+                <td class="description" id="request-description-{{ ticket.id }}">{{ ticket?.requestDescription }}</td>
+                <td id="request-status-{{ ticket.id }}">
+                    <span class="badge" [ngClass]="{
+                        'text-bg-info': ticket?.statusDescription?.status === 'Assigned',
+                        'text-bg-warning': ticket?.statusDescription?.status === 'In Progress',
+                        'bg-success': ticket?.statusDescription?.status === 'Approved',
+                        'bg-danger': ticket?.statusDescription?.status === 'Rejected'
+                    }">
+                        {{ ticket?.statusDescription?.status }}
+                    </span>
+                </td>   
+                <td id="update-time-{{ ticket.id }}">{{ getTime(ticket.updateTimestamp) }}</td>
+                <td class="description" id="assigned-to-{{ ticket.id }}">
+                    {{ ticket.comment?.comment }}
+                </td>
+            </tr>
+            <tr *ngFor="let ticket of allRejectedTickets" class="ticket-card" id="ticket-{{ ticket.id }}">
+                <td>
+                    <div class="d-flex align-items-center" id="profile-pic-container-{{ ticket.id }}">
+                        <img src="https://th.bing.com/th?id=OIP.f3DM2upCo-p_NPRwBAwbKQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+                             alt="Profile picture of {{ ticket.assignedTo?.name || 'user' }}"
+                             style="width: 45px; height: 45px"
+                             class="rounded-circle img-fluid"
+                             loading="lazy"
+                             id="profile-pic-{{ ticket.id }}"
+                        />
+                    </div>
+                </td>
+                <td id="request-category-{{ ticket.id }}">
+                    <p class="fw-bold mb-1">{{ ticket?.category?.categoryName }}</p>
+                </td>
+                <td class="description" id="request-description-{{ ticket.id }}">{{ ticket?.requestDescription }}</td>
+                <td id="request-status-{{ ticket.id }}">
+                    <span class="badge" [ngClass]="{
+                        'text-bg-info': ticket?.statusDescription?.status === 'Assigned',
+                        'text-bg-warning': ticket?.statusDescription?.status === 'In Progress',
+                        'bg-success': ticket?.statusDescription?.status === 'Approved',
+                        'bg-danger': ticket?.statusDescription?.status === 'Rejected'
+                    }">
+                        {{ ticket?.statusDescription?.status }}
+                    </span>
+                </td>   
+                <td id="update-time-{{ ticket.id }}">{{ getTime(ticket.updateTimestamp) }}</td>
+                <td class="description" id="assigned-to-{{ ticket.id }}">
+                    {{ ticket.comment?.comment }}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+

@@ -16,6 +16,7 @@ import { RejectedRequestComponent } from './homepage/rejectedRequest/rejectedReq
 import { DashBoardComponent } from './homepage/adminDashboard/dashBoard/dashBoard.component';
 import { NewAdminComponent } from './homepage/adminDashboard/newAdmin/newAdmin.component';
 import { AddServiceComponent } from './homepage/adminDashboard/addService/addService.component';
+import { HistoryComponent } from './homepage/adminDashboard/history/history.component';
 
 
 const routes: Routes = [
@@ -33,7 +34,8 @@ const routes: Routes = [
                 children: [
                     {path: 'dashboard', component: DashBoardComponent},
                     {path:'newAdmin',component: NewAdminComponent},
-                    {path:'addService',component: AddServiceComponent}
+                    {path:'addService',component: AddServiceComponent},
+                    {path:'Records',component: HistoryComponent}
                 ]
             },
             { path:'indexPage', component: IndexPageComponent},

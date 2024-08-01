@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { InproInterface } from './homepage/inProgress/inpro-interface';
-import { Ticket, StatusDescription, Category, Admins, Country } from './interface';
-import { Router } from '@angular/router';
+import { TicketInterface } from './homepage/inProgress/inpro-interface';
+import { Category } from './homepage/homePageInterface';
+import {  Admins, Country, User, RequestCount } from './interface';
 
 
 @Injectable({
@@ -15,10 +15,10 @@ export class SharedService {
     private loggedInUser: any;
     private inProgressUser: any;
 
-    constructor(private _http: HttpClient, private _router: Router) { }
+    constructor(private _http: HttpClient) { }
 
-    login(loginPayload: any): Observable<any> {
-        return this._http.post<any>(`/log`, loginPayload);
+    login(loginPayload: any): Observable<User> {
+        return this._http.post<User>(`/log`, loginPayload);
     }
 
     signup(signupPayload: any): Observable<any> {
@@ -46,12 +46,25 @@ export class SharedService {
         return this._http.get<Admins[]>('/getAllAdmins');
     }
 
-    setLoggedInUser(user: any): void {
-        this.loggedInUser = user;
+    getUsers(): Observable<Admins[]> {
+        return this._http.get<Admins[]>('/getAllUsers');
     }
 
+    setLoggedInUser(user: any): void {
+        this.loggedInUser = user;
+        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
+    }
+    
     getLoggedInUser(): any {
+    if (this.loggedInUser) {
         return this.loggedInUser;
+    }
+    const user = sessionStorage.getItem('loggedInUser');
+    if (user) {
+        this.loggedInUser = JSON.parse(user);
+        return this.loggedInUser;
+    }
+    return null;
     }
 
     setInProgress(user: any): void {
@@ -62,28 +75,47 @@ export class SharedService {
         return this.inProgressUser;
     }
 
-    getAllServiceTicket(ticketFetchPayLoad:any): Observable<InproInterface> {
-        return this._http.post<InproInterface>(`/getAllIn-progressTickets`,ticketFetchPayLoad);
+    getAllServiceTicket(ticketFetchPayLoad:any): Observable<TicketInterface> {
+        return this._http.post<TicketInterface>(`/getTicketsBasedOnStatus`,ticketFetchPayLoad);
     }
 
     assignTicket(assignPayLoad: any): Observable<any> {
         return this._http.post<any>(`assignTicket`,assignPayLoad)
     }
 
-    getAllRequestCount() : Observable<InproInterface> {
-        return this._http.get<InproInterface>(`/getAllRequestCount/${this.loggedInUser.personId}`);
+    getAllRequestCount() : Observable<RequestCount> {
+        return this._http.get<RequestCount>(`/getAllRequestCount/${this.loggedInUser.personId}`);
     }
 
-    getAllTickets() : Observable<InproInterface> {
-        return this._http.get<InproInterface>(`/getAllTickets/${this.loggedInUser.personId}`);
+    getAllTickets() : Observable<TicketInterface> {
+        return this._http.get<TicketInterface>(`/getAllTickets/${this.loggedInUser.personId}`);
     }
 
-    clearUserSession() {
+
+    getAllAssignedToMe(approvedticketFetchPayLoad:any) : Observable<TicketInterface>{
+        return this._http.post<TicketInterface>(`/getAllAssignedToMeTickets`,approvedticketFetchPayLoad);
+    }
+
+    statusChangeToApprovedOrRejected(ApprovedOrRejectedPayLoad:any) : Observable<any>{
+        return this._http.post<any>(`/statusChangeToApprovedOrRejected`,ApprovedOrRejectedPayLoad);
+    }
+
+    makeNewAdmin(newAdminPayLoad:any): Observable<any>{
+        return this._http.post<any>(`/makeAdmin`,newAdminPayLoad);
+    }
+
+    revokeAdmin(revokeAdminPayload:any): Observable<any>{
+        return this._http.post<any>(`/removeAdmin`,revokeAdminPayload);
+    }
+
+    createNewServiceCategory(newServicePayLoad:any): Observable<any>{
+        return this._http.post<any>(`/createNewServiceCategory`,newServicePayLoad);
+    }
+
+
+    clearUserSession(): void {
         this.loggedInUser = null;
+        sessionStorage.removeItem('loggedInUser');
+        
     }
-
-    getAllAssignedToMe(approvedticketFetchPayLoad:any) : Observable<InproInterface>{
-        return this._http.post<InproInterface>(`/getAllAssignedToMeTickets`,approvedticketFetchPayLoad);
-    }
-
 }

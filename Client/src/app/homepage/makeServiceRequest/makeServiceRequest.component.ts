@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SharedService } from '../../shared.service';
 import { Router } from '@angular/router';
-import { Category } from '../../interface';
+import { Category } from '../homePageInterface'; 
 import Swal from 'sweetalert2';
 
 @Component({
@@ -33,8 +33,8 @@ export class MakeServiceRequestComponent implements OnInit {
   }
 
   private checkUserAuthentication(): void {
-    const isLoggedIn = !!this._sharedService.getLoggedInUser();
-    if (!isLoggedIn) {
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
       this._router.navigate(['/login']);
     }
   }
@@ -87,6 +87,9 @@ export class MakeServiceRequestComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       });
+
+      this.makeReqObj.requestDescription="";
+      this.selectService=null;
   }
 
   public scrollToElement(elementId: string) {

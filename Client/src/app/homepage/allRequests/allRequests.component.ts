@@ -21,17 +21,16 @@ export class AllRequestsComponent implements OnInit {
     }
 
     private checkUserAuthentication(): void {
-        const isLoggedIn = !!this._sharedService.getLoggedInUser();
-        if (!isLoggedIn) {
-            this._router.navigate(['/login']);
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (!loggedInUser) {
+          this._router.navigate(['/login']);
         }
-    }
+      }
 
     public loadAllTickets() {
         this._sharedService.getAllTickets().subscribe({
             next: (response: any) => {
                 this.AllTickets = response;
-                console.log(response);
             },
             error: (err) => {
                 console.error('Failed to fetch tickets', err);

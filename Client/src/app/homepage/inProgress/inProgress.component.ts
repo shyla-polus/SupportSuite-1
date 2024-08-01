@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../shared.service';
 import { Router } from '@angular/router';
-import { Category } from './inpro-interface';
-import { Admins } from '../../interface';
-import { TicketFetchPayLoad } from '../../interface';
+import { Admins,TicketFetchPayLoad} from '../../interface';
 import Swal from 'sweetalert2';
+import { EditReqObjPayload, Ticket ,Category} from '../homePageInterface';
+
 
 @Component({
     selector: 'app-inProgress',
@@ -15,7 +15,7 @@ export class InProgressComponent implements OnInit {
 
 
 
-  inProgressTickets: any = [];
+  inProgressTickets: Ticket[] = [];
   loggedInUser: any;
   pageNumber:number=0;
   deleteTicketVariable:number=0;
@@ -25,11 +25,11 @@ export class InProgressComponent implements OnInit {
   categories: Category[] = [];
   administrator: Admins[] = [];
   allRequestCount: any ={};
-  editReqObjPayload: any = {
-    category: '',
+  editReqObjPayload: EditReqObjPayload = {
     requestDescription: '',
-    personId: null,
-    ticketId: null
+    ticketId: 0,
+    personId: 0,
+    category: ''
   };
   assignTicketObj: any = {
     ticketId: null,
@@ -47,10 +47,14 @@ export class InProgressComponent implements OnInit {
     this.getAllRequestCount();
   }
 
+  public isAdmin(): boolean {
+    return this.loggedInUser?.roles.some((role: any) => role.roleId === 1)
+  }
 
+  
   private checkUserAuthentication(): void {
-    const isLoggedIn = !!this._sharedService.getLoggedInUser();
-    if (!isLoggedIn) {
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
       this._router.navigate(['/login']);
     }
   }
@@ -60,7 +64,7 @@ export class InProgressComponent implements OnInit {
         this.isResponseSent = false;
       }
     
-      public getTime(timestamp: string): string {
+    public getTime(timestamp: string): string {
         const NOW = new Date();
         const PASTDATE = new Date(timestamp);
         const SECONDSAGO = Math.floor((NOW.getTime() - PASTDATE.getTime()) / 1000);
@@ -86,13 +90,10 @@ export class InProgressComponent implements OnInit {
             return SECONDSAGO === 1 ? '1 second ago' : `${SECONDSAGO} seconds ago`;
         }
     }
-    public pageNumberFun(page:number) {
-            this.pageNumber=page;
-            this.loadInProgressTickets();
 
-    }
+
     public loadInProgressTickets() {
-    const ticketFetchPayLoad: TicketFetchPayLoad = {
+        const ticketFetchPayLoad: TicketFetchPayLoad = {
         personID: this.loggedInUser.personId,
         statusType: 1,
         pageNumber: this.pageNumber,
@@ -109,8 +110,106 @@ export class InProgressComponent implements OnInit {
     });
     }
 
+    private getCategories(): void {
+        this._sharedService.getCategories().subscribe({
+        next: (data: Category[]) => {
+        this.categories = data;
+        },
+        error: (err) => {
+        console.error('Failed to fetch categories', err);
+        }
+    });
+    }
+
+    private getAdmin(): void {
+        this._sharedService.getAdmin().subscribe({
+        next: (data: Admins[]) => {
+        this.administrator = data;
+        },
+        error: (err) => {
+        console.error('Failed to fetch admins', err);
+        }
+    });
+    }
+
+    public currentTicket(ticket: any): void {
+        this.assignTicketObj.ticketId = ticket.ticketId;
+        this.editReqObjPayload = {
+            requestDescription: ticket.requestDescription,
+            ticketId: ticket.ticketId,
+            personId: this.loggedInUser.personId,
+            category: ticket.category.categoryCode
+        };
+    }
+
+    public saveChanges(): void {
+        if (!this.editReqObjPayload.requestDescription) {
+            this.displayErrorMessage('descriptionErrorMessage', 'Please provide a description to continue.');
+            return;
+        }
+        if (!this.editReqObjPayload.requestDescription.trim()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Empty Field',
+                text: 'Please do not leave the description field empty.',
+                confirmButtonText: 'OK'
+            });
+            return; 
+        }
+
+        this._sharedService.makeServiceRequest(this.editReqObjPayload).subscribe({
+        next: (response: any) => {
+        this.loadInProgressTickets();
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Successfully Edited",
+            showConfirmButton: false,
+            timer: 2000
+            }); 
+        },
+        error: (err) => {
+           console.error('Failed to update ticket', err);
+        }
+        });
+    }
+
+
+    public setDeleteTicket(ticketId: number){
+        this.deleteTicketVariable=ticketId;
+    }
+
+    public deleteTicket(): void {
+        this._sharedService.deleteInProgress(this.deleteTicketVariable).subscribe({
+        next: (response: any) => {
+        this.loadInProgressTickets();
+        },
+        error: (err) => {
+        console.error('Failed to delete ticket', err);
+        }
+    });
+    }
+
+    public assignTicket(): void {
+    this._sharedService.assignTicket(this.assignTicketObj).subscribe({
+        next: (response: any) => {
+        this.loadInProgressTickets();
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Request is assigned to Administrator",
+            showConfirmButton: false,
+            timer: 2000
+            });
+            this.assignTicketObj.assignedTo=0;
+
+        }
+    });
+    }
+
+    
     private getAllRequestCount(): void{
-    this._sharedService.getAllRequestCount().subscribe({
+        this._sharedService.getAllRequestCount().subscribe({
         next: (response: any) => {
             this.allRequestCount=response;
             const totalRequestCount = response.inProgressRequests; 
@@ -122,102 +221,14 @@ export class InProgressComponent implements OnInit {
         }
     });
     }
-    
-      private getCategories(): void {
-        this._sharedService.getCategories().subscribe({
-          next: (data: Category[]) => {
-            this.categories = data;
-          },
-          error: (err) => {
-            console.error('Failed to fetch categories', err);
-          }
-        });
-      }
-    
-      private getAdmin(): void {
-        this._sharedService.getAdmin().subscribe({
-          next: (data: Admins[]) => {
-            this.administrator = data;
-          },
-          error: (err) => {
-            console.error('Failed to fetch admins', err);
-          }
-        });
-      }
-    
-      public currentTicket(ticket: any): void {
-        this.assignTicketObj.ticketId = ticket.ticketId;
-        this.editReqObjPayload = {
-          requestDescription: ticket.requestDescription,
-          ticketId: ticket.ticketId,
-          personId: this.loggedInUser.personId,
-          category: ticket.category.categoryCode
-        };
-      }
-    
-      public saveChanges(): void {
-        if (!this.editReqObjPayload.requestDescription) {
-          this.displayErrorMessage('descriptionErrorMessage', 'Please provide a description to continue.');
-          return;
-        }
-        if (!this.editReqObjPayload.requestDescription.trim()) {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Empty Field',
-              text: 'Please do not leave the description field empty.',
-              confirmButtonText: 'OK'
-            });
-            return; 
-          }
-    
-        this._sharedService.makeServiceRequest(this.editReqObjPayload).subscribe({
-          next: (response: any) => {
-            this.loadInProgressTickets();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Successfully Edited",
-                showConfirmButton: false,
-                timer: 2000
-              });
-            return; 
-          },
-          error: (err) => {
-            console.error('Failed to update ticket', err);
-          }
-        });
-      }
 
 
-      public setDeleteTicket(ticketId: number){
-          this.deleteTicketVariable=ticketId;
-      }
     
-      public deleteTicket(): void {
-        this._sharedService.deleteInProgress(this.deleteTicketVariable).subscribe({
-          next: (response: any) => {
-            this.loadInProgressTickets();
-          },
-          error: (err) => {
-            console.error('Failed to delete ticket', err);
-          }
-        });
-      }
-    
-      public assignTicket(): void {
-        this._sharedService.assignTicket(this.assignTicketObj).subscribe({
-          next: (response: any) => {
-            this.loadInProgressTickets();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Request is assigned to Administrator",
-                showConfirmButton: false,
-                timer: 2000
-              });
-          }
-        });
-      }
+    public pageNumberFun(page:number) {
+        this.pageNumber=page;
+        this.loadInProgressTickets();
+    }
+
 
     public getPagesArray(): number[] {
         return Array.from({ length: this.totalPages }, (_, i) => i);

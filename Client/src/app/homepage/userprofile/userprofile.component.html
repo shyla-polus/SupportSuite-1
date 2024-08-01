@@ -3,69 +3,66 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    <h4 tabindex="1">My Profile</h4>
+                    <h4>My Profile</h4>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-6 text-center">
                             <img src="https://th.bing.com/th?id=OIP.f3DM2upCo-p_NPRwBAwbKQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" 
-                                 alt="user profile picture" 
-                                 tabindex="1" 
+                                 alt="User's profile " 
                                  class="rounded-circle img-fluid" 
                                  style="width: 50%; height: auto;" />
                             <div class="mt-2">
-                                <label class="col-form-label labelweight">Designation</label>
-                                <p class="profile-value" tabindex="1" aria-label="user designation">{{ loggedInUser?.designation }}</p>
+                                <label class="col-form-label">Designation</label>
+                                <p class="profile-value" aria-label="user designation">{{ loggedInUser?.designation }}</p>
                             </div>
                         </div>
                         <div class="col-md-6 d-flex align-items-center">
                             <div class="user-info">
-
-                                <h4 class=" d-inline" tabindex="1">{{ loggedInUser?.userName }}</h4>
+                                <h4 class="d-inline">{{ loggedInUser?.userName }}</h4>
                             </div>
                         </div>
                     </div>
-                    
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="user-info">
-                                <label class="col-form-label labelweight" tabindex="1" aria-label="firstname field">First name:-</label>
-                                <p class="profile-value d-inline"  tabindex="1">{{ loggedInUser?.firstName }}</p>
+                                <label class="col-form-label">First name:</label>
+                                <p class="profile-value d-inline">{{ loggedInUser?.firstName }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="user-info">
-                                <label class="col-form-label labelweight" aria-label="lastname label" tabindex="1">Last name:-</label>
-                                <p class="profile-value d-inline"  tabindex="1">{{ loggedInUser?.lastName }}</p>
+                                <label class="col-form-label">Last name:</label>
+                                <p class="profile-value d-inline">{{ loggedInUser?.lastName }}</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="col-form-label labelweight" aria-label="email label" tabindex="1">Email address:-</label>
-                            <p class="profile-value d-inline"  tabindex="1">{{ loggedInUser?.email }}</p>
+                            <label class="col-form-label">Email address:</label>
+                            <p class="profile-value d-inline">{{ loggedInUser?.email }}</p>
                         </div>
                         <div class="col-md-6">
-                            <label class="col-form-label labelweight" aria-label="address label" tabindex="1">Address:-</label>
-                            <p class="profile-value d-inline"  tabindex="1">{{ loggedInUser?.address }}</p>
+                            <label class="col-form-label">Address:</label>
+                            <p class="profile-value d-inline">{{ loggedInUser?.address }}</p>
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="col-form-label labelweight" aria-label="country label" tabindex="1">Country:-</label>
-                            <p class="profile-value d-inline"  tabindex="1">{{ loggedInUser?.country?.countryName }}</p>
+                            <label class="col-form-label">Country:</label>
+                            <p class="profile-value d-inline">{{ loggedInUser?.country?.countryName }}</p>
                         </div>
                         <div class="col-md-6">
-                            <label class="col-form-label labelweight" aria-label="phone number label" tabindex="1">Phone Number:-</label>
-                            <p class="profile-value d-inline"  tabindex="1">{{ loggedInUser?.phoneNumber }}</p>
+                            <label class="col-form-label">Phone Number:</label>
+                            <p class="profile-value d-inline">{{ loggedInUser?.phoneNumber }}</p>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button type="button" title="Edit Profile" class="btn btn-dark" tabindex="1" aria-label="Edit profile">
+                        <button type="button" title="Edit Profile" class="btn btn-dark" aria-label="Edit profile">
                             <i class="bi bi-pencil"></i> Edit
                         </button>
                     </div>

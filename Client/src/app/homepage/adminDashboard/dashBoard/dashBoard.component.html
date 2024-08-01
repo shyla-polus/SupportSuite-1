@@ -1,50 +1,107 @@
-<table class="table align-middle mb-0 bg-white">
-    <thead class="bg-light">
-      <tr>
-        <th>Name</th>
-        <th>Request</th>
-        <th>Description</th>
-        <th>comment</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ticket of allAssignedTickets" class="ticket-card" tabIndex="1">
-        <td>
-          <div class="d-flex align-items-center">
-            <img
-                src="https://th.bing.com/th?id=OIP.f3DM2upCo-p_NPRwBAwbKQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
-                alt=""
-                style="width: 45px; height: 45px"
-                class="rounded-circle"
-                />
-            <div class="ms-3">
-              <p class="fw-bold mb-1"></p>
+<h3 class="d-flex justify-content-start">Dashboard</h3>
+<div class="table-responsive">
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+          <tr>
+            <th>Name</th>
+            <th>Request</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of allAssignedTickets" class="ticket-card" tabindex="0">
+            <td>
+              <div class="d-flex align-items-center">
+                <img
+                    src="https://th.bing.com/th?id=OIP.f3DM2upCo-p_NPRwBAwbKQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+                    alt=""
+                    style="width: 45px; height: 45px"
+                    class="rounded-circle"
+                    />
+                <div class="ms-3">
+                  <p class="fw-bold mb-1">{{ ticket?.userName }}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{ ticket?.category?.categoryName }}</p>
+            </td>
+            <td class="description-column" title="{{ ticket?.requestDescription }}">{{ ticket?.requestDescription }}</td>
+            <td>{{ getTime(ticket?.updateTimestamp) }}</td>
+            <td>
+                <button type="button" class="btn btn-outline-primary me-1" title="Approve Ticket" (click)="currentTicket(ticket.ticketId)"
+                   data-bs-toggle="modal" data-bs-target="#approveRejectTicketPopUp" aria-label="Approve Ticket">
+                   Action</button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    
+</div>
+
+<div class="btn-group me-2 d-flex align-items-center btn-group btn" role="group" aria-label="Pagination" tabindex="0">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of getPagesArray()" title="Pagination">
+            <a class="page-link" (click)="pageNumberFun(page)"> {{ page + 1 }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="modal fade" id="approveRejectTicketPopUp" tabindex="-1" aria-labelledby="approveRejectTicketPopUpLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="approveRejectTicketPopUpLabel" tabindex="0">Approve or Reject Ticket</h1>
+        <button type="button" title="close button" class="btn-close" tabindex="0" data-bs-dismiss="modal" (click)="setComment();getAllAssignedToMe()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form form-control-sm shadow-lg p-3 rounded" aria-label="Edit Ticket Form">
+          <div class="row mb-2">
+            <div class="col-3 col-sm-12">
+              <label class="form-label" for="description" tabindex="0">Comments</label>
+            </div>
+            <div class="col-9 col-sm-12">
+              <textarea class="form-control" tabindex="0" id="description" rows="5" [(ngModel)]="TicketApproveOrRejectDTO.comment"
+                name="description" placeholder="Enter a comment about your response" aria-label="Enter a comment about your response" aria-required="true" required></textarea>  
             </div>
           </div>
-        </td>
-        <td>
-          <p class="fw-normal mb-1">{{ ticket?.category?.categoryName }}</p>
-        </td>
-        <td>{{ ticket?.requestDescription }}</td>
-        <td>
-          <span class="badge badge-success rounded-pill">{{ ticket?.statusDescription?.status }}</span>
-        </td>
-        <td>Senior</td>
-        <td>
-            <button class="btn btn-dark" title="Edit Ticket"
-            data-bs-toggle="modal" data-bs-target="#editTicketPopUp" aria-label="Edit Ticket">
-            <i class="bi bi-pencil-square"></i> <span class="d-none d-md-inline"></span>
-          </button>
-          <button class="btn btn-danger m-2" title="Delete Ticket" aria-label="Delete Ticket">
-            <i class="bi bi-trash"></i><span class="d-none d-md-inline"></span>
-          </button>
-          <button type="button" class="btn btn-success"  title="Submit Ticket" data-bs-toggle="modal"
-            data-bs-target="#submitTicketPopUp" aria-label="Submit Ticket">
-            <i class="bi bi-check2"></i><span class="d-none d-md-inline"></span>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <div *ngIf="showApproveMessage">
+            <div class="alert alert-success" tabindex="0" role="alert">
+              Do you want to approve this request?
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-outline-primary" title="Approve Ticket" (click)="isApproveReject(3)" data-bs-dismiss="modal" tabindex="0" aria-label="Approve button">Confirm</button>
+            </div>
+          </div>
+          <div *ngIf="showRejectMessage">
+            <div class="alert alert-danger" tabindex="0" role="alert">
+              Do you want to reject this request?
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-outline-danger" title="Reject Ticket" (click)="isApproveReject(4)" data-bs-dismiss="modal" tabindex="0" aria-label="Reject button">Confirm</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" title="Close" data-bs-dismiss="modal" (click)="setComment();getAllAssignedToMe()" tabindex="0" aria-label="Close Edit Ticket Modal">Close</button>
+        <button type="button" class="btn btn-outline-primary" title="Approve" (click)="toggleApproveMessage()" tabindex="0" aria-label="Approve">Approve</button>
+        <button type="button" class="btn btn-outline-danger" title="Reject" (click)="toggleRejectMessage()" tabindex="0" aria-label="Reject">Reject</button>
+      </div>
+    </div>
+  </div>
+</div>

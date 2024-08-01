@@ -1,74 +1,105 @@
 {
   "/log": {
-    "target": "http://10.199.100.142:8080/api/login",
+    "target": "http://10.199.100.141:8080/api/login",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/log" : ""}
   },
   "/sign": {
-    "target": "http://10.199.100.142:8080/api/signup",
+    "target": "http://10.199.100.141:8080/api/signup",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/sign" : ""}
   },
   "/count": {
-    "target": "http://10.199.100.142:8080/api/countries",
+    "target": "http://10.199.100.141:8080/api/countries",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/count" : ""}
   },
   "/service": {
-    "target": "http://10.199.100.142:8080/api/getAllServiceCategories",
+    "target": "http://10.199.100.141:8080/api/getAllServiceCategories",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/service" : ""}
   },
   "/getAllAdmins": {
-    "target": "http://10.199.100.142:8080/api/getAllUsersByRoleId/1",
+    "target": "http://10.199.100.141:8080/api/getAllUsersByRoleId/1",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/getAllAdmins" : ""}
   },
+  "/getAllUsers": {
+    "target": "http://10.199.100.141:8080/api/getAllUsersByRoleId/2",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/getAllUsers" : ""}
+  },
   "/makeServiceRequest": {
-    "target": "http://10.199.100.142:8080/api/createOrEditServiceTicket",
+    "target": "http://10.199.100.141:8080/api/createOrEditServiceTicket",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/makeServiceRequest" : ""}
   },
-  "/getAllIn-progressTickets": {
-    "target": "http://10.199.100.142:8080/api/getServiceTickets",
+  "/getTicketsBasedOnStatus": {
+    "target": "http://10.199.100.141:8080/api/getServiceTickets",
     "secure": false,
     "changeOrigin": true,
-    "pathRewrite": {"^/getAllIn-progressTickets" : ""}
+    "pathRewrite": {"^/getTicketsBasedOnStatus" : ""}
   },
   "/deleteTicket": {
-    "target": "http://10.199.100.142:8080/api/deleteServiceTicket",
+    "target": "http://10.199.100.141:8080/api/deleteServiceTicket",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/deleteTicket" : ""}
   },
   "/assignTicket": {
-    "target": "http://10.199.100.142:8080/api/ticketStatusChangeToAssigned",
+    "target": "http://10.199.100.141:8080/api/ticketStatusChangeToAssigned",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/assignTicket" : ""}
   },
   "/getAllRequestCount": {
-    "target": "http://10.199.100.142:8080/api/getAllRequestCountsByPersonID",
+    "target": "http://10.199.100.141:8080/api/getAllRequestCountsByPersonID",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/getAllRequestCount" : ""}
   },
   "/getAllTickets": {
-    "target": "http://10.199.100.142:8080/api/getAllServiceTicketsByPersonID",
+    "target": "http://10.199.100.141:8080/api/getAllServiceTicketsByPersonID",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/getAllTickets" : ""}
   },
   "/getAllAssignedToMeTickets": {
-    "target": "http://10.199.100.142:8080/api/getAllAssignedToMeTickets",
+    "target": "http://10.199.100.141:8080/api/getAllAssignedToMeTickets",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/getAllAssignedToMeTickets" : ""}
+  },
+  "/statusChangeToApprovedOrRejected": {
+    "target": "http://10.199.100.141:8080/api/statusChangeToApprovedOrRejected",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/statusChangeToApprovedOrRejected" : ""}
+  },
+  "/makeAdmin": {
+    "target": "http://10.199.100.141:8080/api/makeAdmin",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/makeAdmin" : ""}
+  },
+  "/removeAdmin": {
+    "target": "http://10.199.100.141:8080/api/removeAdmin",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/removeAdmin" : ""}
+  },
+  "/createNewServiceCategory": {
+    "target": "http://10.199.100.141:8080/api/createNewServiceCategory",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/createNewServiceCategory" : ""}
   }
+
 }

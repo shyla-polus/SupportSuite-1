@@ -5,7 +5,7 @@ import { TicketFetchPayLoad } from '../../interface';
 
 @Component({
   selector: 'app-rejectedRequest',
-  templateUrl: './rejectedRequest.component.html',
+  templateUrl:'./rejectedRequest.component.html',
   styleUrls: ['./rejectedRequest.component.css']
 })
 export class RejectedRequestComponent implements OnInit {
@@ -28,11 +28,11 @@ export class RejectedRequestComponent implements OnInit {
   }
 
   private checkUserAuthentication(): void {
-    const isLoggedIn = !!this._sharedService.getLoggedInUser();
-    if (!isLoggedIn) {
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
       this._router.navigate(['/login']);
-        }
     }
+  }
 
     public pageNumberFun(page:number) {
         this.pageNumber=page;

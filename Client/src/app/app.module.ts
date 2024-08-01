@@ -22,6 +22,7 @@ import { RejectedRequestComponent } from './homepage/rejectedRequest/rejectedReq
 import { DashBoardComponent } from './homepage/adminDashboard/dashBoard/dashBoard.component';
 import { AddServiceComponent } from './homepage/adminDashboard/addService/addService.component';
 import { NewAdminComponent } from './homepage/adminDashboard/newAdmin/newAdmin.component';
+import { HistoryComponent } from './homepage/adminDashboard/history/history.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { NewAdminComponent } from './homepage/adminDashboard/newAdmin/newAdmin.c
     RejectedRequestComponent,
     NewAdminComponent,
     AddServiceComponent,
-    DashBoardComponent
+    DashBoardComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

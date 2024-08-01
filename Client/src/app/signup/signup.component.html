@@ -4,124 +4,115 @@
             <form novalidate #signupForm="ngForm" aria-labelledby="signupPageTitle" class="p-4">
                 <div class="d-flex flex-column align-items-center mb-2">
                     <div>
-                        <img width="100" height="100" src="polus-logo-mono.png" alt="website logo" tabindex="1">
+                        <img width="75" height="75" src="polus-logo-mono.png" alt="website logo">
                     </div>
                     <div>
-                        <h1 id="signupPageTitle" class="text-center font-weight-bold mb-2" tabindex="1">SupportSuite</h1>
+                        <h1 id="signupPageTitle" class="text-center font-weight-bold mb-2">SupportSuite</h1>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-12">
-                        <h3 tabindex="1" aria-label="Signup">Signup</h3>
+                        <h3>Signup</h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-2">
-                        <div class="">
-                            <label for="SignupUserName" tabindex="1" aria-label="Username label">Username<p class="text-danger d-inline">*</p></label>
-                            <input type="text" class="form-control" id="SignupUserName" [(ngModel)]="signupObj.userName"
-                                name="signupObj.username" placeholder="Enter your Username" required aria-required="true"
-                                aria-label="Username field" tabindex="1">
-                            
+                        <div>
+                            <label for="SignupUserName">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="border-2 form-control" id="SignupUserName" [(ngModel)]="signupObj.userName"
+                                name="signupObj.username" placeholder="Enter your Username" required aria-required="true" tabindex="0">
                             <div *ngIf="errorMap.has('UserNameErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('UserNameErrorMessage')}}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-2">
-                        <div class="">
-                            <label for="SignupFirstName" tabindex="1" aria-label="firstname label">Firstname<p class="text-danger d-inline">*</p></label>
-                            <input type="text" class="form-control" id="SignupFirstName" [(ngModel)]="signupObj.firstName"
-                                name="firstname" placeholder="Enter your Firstname" required aria-required="true" tabindex="1" aria-label="Firstname field">
-                            
+                        <div>
+                            <label for="SignupFirstName">Firstname <span class="text-danger">*</span></label>
+                            <input type="text" class="border-2 form-control" id="SignupFirstName" [(ngModel)]="signupObj.firstName"
+                                name="firstname" placeholder="Enter your Firstname" required aria-required="true" tabindex="0">
                             <div *ngIf="errorMap.has('firstNameErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('firstNameErrorMessage')}}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-2">
-                        <div class="">
-                            <label for="signupLastName" aria-label="lastname label" tabindex="1">Lastname<p class="text-danger d-inline">*</p></label>
-                            <input type="text" class="form-control" id="signupLastName" [(ngModel)]="signupObj.lastName"
-                                name="lastname" placeholder="Enter your Lastname" required aria-required="true" aria-label="Lastname" tabindex="1">
-                            
+                        <div>
+                            <label for="SignupLastName">Lastname <span class="text-danger">*</span></label>
+                            <input type="text" class="border-2 form-control" id="SignupLastName" [(ngModel)]="signupObj.lastName"
+                                name="lastname" placeholder="Enter your Lastname" required aria-required="true" tabindex="0">
                             <div *ngIf="errorMap.has('LastNameErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('LastNameErrorMessage')}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class=" mb-2">
-                    <label for="SignupEmail" tabindex="1" aria-label="email address field">Email address<p class="text-danger d-inline">*</p></label>
-                    <input type="email" class="form-control" id="SignupEmail" [(ngModel)]="signupObj.email" name="email"
-                        placeholder="name@example.com" required aria-required="true" aria-label="Email address field" tabindex="1">
-                    
+                <div class="mb-2">
+                    <label for="SignupEmail">Email address <span class="text-danger">*</span></label>
+                    <input type="email" class="border-2 form-control" id="SignupEmail" [(ngModel)]="signupObj.email" name="email"
+                        placeholder="name@example.com" required aria-required="true" tabindex="0">
                     <div *ngIf="errorMap.has('emailErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                         {{errorMap.get('emailErrorMessage')}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-2">
-                        <div class="">
-                            <label for="selectCountry" aria-label="Country field" tabindex="1">Country<p class="text-danger d-inline">*</p></label>
-                            <select class="form-control" id="selectCountry" [(ngModel)]="countryObj" name="country" required aria-label="select your country from the dropdown" tabindex="1">
+                        <div>
+                            <label for="selectCountry">Country <span class="text-danger">*</span></label>
+                            <select class="form-control border-2" id="selectCountry" [(ngModel)]="countryObj" name="country" required tabindex="0">
                                 <option class="mt-3" value="" disabled>Select your country</option>
                                 <option *ngFor="let country of countries" [ngValue]="country.countryCode">{{ country.countryName }}</option>
                             </select>
-                           
-                            <div *ngIf="errorMap.has('countryErrorMessage') && signupForm.submitted" class="text-danger" role="alert">
+                            <div *ngIf="errorMap.has('countryErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('countryErrorMessage')}}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <div class="">
-                            <label for="signupPhnNo" aria-label="phone number label" tabindex="1">Phone Number<p class="text-danger d-inline">*</p></label>
-                            <input type="text" class="form-control" id="signupPhnNo" [(ngModel)]="signupObj.phoneNumber"
-                                name="phonenumber" placeholder="Enter your Phone Number" required aria-required="true" tabindex="1" aria-label="Phone Number">
-                           
+                        <div>
+                            <label for="signupPhnNo">Phone Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control border-2" id="signupPhnNo" [(ngModel)]="signupObj.phoneNumber"
+                                name="phonenumber" placeholder="Enter your Phone Number" required aria-required="true" tabindex="0">
                             <div *ngIf="errorMap.has('phoneNoerrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('phoneNoerrorMessage')}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class=" mb-2">
-                    <label for="signupAddress" aria-label="address label" tabindex="1">Address<p class="text-danger d-inline">*</p></label>
-                    <input type="text" class="form-control" id="signupAddress" [(ngModel)]="signupObj.address"
-                        name="address" placeholder="Enter your Address" required aria-required="true" tabindex="1" aria-label="Address">
+                <div class="mb-2">
+                    <label for="signupAddress">Address <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control border-2" id="signupAddress" [(ngModel)]="signupObj.address"
+                        name="address" placeholder="Enter your Address" required aria-required="true" tabindex="0">
                     <div *ngIf="errorMap.has('addressErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                         {{errorMap.get('addressErrorMessage')}}
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-6 mb-2">
-                        <div class="">
-                            <label for="SignupNewPassword" aria-label="new password label" tabindex="1">New Password<p class="text-danger d-inline">*</p></label>
-                            <input type="password" class="form-control" id="SignupNewPassword" [(ngModel)]="signupObj.password"
-                                name="newPassword" placeholder="Enter your Password" required aria-required="true" tabindex="1" aria-label="New Password">
-                            
+                        <div>
+                            <label for="SignupNewPassword">New Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control border-2" id="SignupNewPassword" [(ngModel)]="signupObj.password"
+                                name="newPassword" placeholder="Enter your Password" required aria-required="true" tabindex="0">
                             <div *ngIf="errorMap.has('newPasswordErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('newPasswordErrorMessage')}}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <div class="">
-                            <label for="SignupCnfrmPassword" aria-label="confirm password label" tabindex="1">Confirm Password<p class="text-danger d-inline">*</p></label>
-                            <input type="password" class="form-control" id="SignupCnfrmPassword"
+                        <div>
+                            <label for="SignupCnfrmPassword">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control border-2" id="SignupCnfrmPassword"
                                 [(ngModel)]="signupConfirmPassword" name="confirmPassword" placeholder="Confirm Password must be same as new password"
-                                required aria-required="true" tabindex="1" aria-label="Confirm Password field">
-                            
+                                required aria-required="true" tabindex="0">
                             <div *ngIf="errorMap.has('ConfirmPasswordErrorMessage') && signupForm.submitted" class="text-danger small" role="alert">
                                 {{errorMap.get('ConfirmPasswordErrorMessage')}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 d-flex justify-content-end" tabindex="1">Have an account? <a routerLink="/login" tabindex="1" aria-label="Login page link">Login</a></div>
+                <div class="mb-2 d-flex justify-content-end">Have an account? <a routerLink="/login" tabindex="0" aria-label="Go to Login page">Login</a></div>
                 <div class="d-flex justify-content-center">
-                    <button class="btn btn-dark mb-2" aria-label="signup button" tabindex="1" (click)="signupValidate()" type="submit">
+                    <button class="btn btn-dark mb-2" aria-label="Sign up button" (click)="signupValidate()" type="submit">
                         Sign up
                     </button>
                 </div>
